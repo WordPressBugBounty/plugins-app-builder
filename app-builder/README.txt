@@ -4,7 +4,7 @@ Donate link: https://1.envato.market/x9JBRR
 Tags: app builder, woocommerce app, news app, flutter, mobile builder
 Requires at least: 5.6
 Tested up to: 6.6
-Stable tag: 5.3.9
+Stable tag: 5.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.4
@@ -152,7 +152,10 @@ Yeah! The app support multi languages
 
 == Changelog ==
 
-= 5.3.9 - 30-Sep-2024 =
+= 5.4.0 - 04-Oct-2024 =
+Support: OIDC Token Validation login Facebook in Limited Token
+
+= 5.3.9 - 04-Oct-2024 =
 Updated: Replaced PUT and DELETE methods with POST to improve compatibility with servers that do not support PUT and DELETE requests.
 
 = 5.3.8 - 30-Sep-2024 =
