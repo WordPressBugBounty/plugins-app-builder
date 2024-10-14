@@ -10,7 +10,7 @@
  * Plugin Name:       App Builder - Create Native Android & iOS Apps On The Flight
  * Plugin URI:        https://appcheap.io/docs
  * Description:       The App Builder has it all: drag and drop mobile app, power and control over your app. Get started now!.
- * Version:           5.4.0
+ * Version:           5.4.1
  * Author:            Appcheap.io
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -88,6 +88,7 @@ $container->set(
  * Bind App Vendor store.
  */
 $container->set( 'vendor', AppBuilder\Di\Service\Vendor\StoreFactory::class );
+$container->set( 'store', AppBuilder\Di\Service\Store\Store::class );
 
 /**
  * Bind Admin and Frontend.

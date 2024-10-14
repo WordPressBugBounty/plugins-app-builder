@@ -1,12 +1,11 @@
 <?php
-
 /**
- * class TemplateHook
+ * Class TemplateHook
  *
  * @link       https://appcheap.io
  * @author     ngocdt
  * @since      1.4.0
- *
+ * @package    AppBuilder
  */
 
 namespace AppBuilder\Hooks;
@@ -30,7 +29,7 @@ class TemplateHook {
 	 *
 	 * @return array
 	 */
-	public function prepare_rest_settings_data( array $data = [] ): array {
+	public function prepare_rest_settings_data( array $data = array() ): array {
 		global $woocommerce_wpml;
 
 		// Language
@@ -42,15 +41,15 @@ class TemplateHook {
 		$currency   = function_exists( 'get_woocommerce_currency' ) ? get_woocommerce_currency() : 'USD';
 
 		// Active currency
-		$currencyActive = [
-			'currency' => 'USD',
-			'symbol' => '$',
-			'position' => 'left',
+		$currencyActive = array(
+			'currency'     => 'USD',
+			'symbol'       => '$',
+			'position'     => 'left',
 			'thousand_sep' => '',
-			'decimal_sep' => '.',
+			'decimal_sep'  => '.',
 			'num_decimals' => 2,
-			'rate' => 1,
-		];
+			'rate'         => 1,
+		);
 		if ( function_exists( 'get_woocommerce_currency' ) ) {
 			$currencyActive = array(
 				'currency'     => get_woocommerce_currency(),
@@ -73,7 +72,7 @@ class TemplateHook {
 					$currencies[ $key ] = $value;
 				}
 			}
-		} else if ( function_exists( 'WC_Payments_Multi_Currency' ) ) {
+		} elseif ( function_exists( 'WC_Payments_Multi_Currency' ) ) {
 			/**
 			 * Support enabled WC Payments Multi Currency
 			 */
@@ -93,8 +92,7 @@ class TemplateHook {
 					);
 				}
 			}
-
-		} else if ( class_exists( '\WOOMULTI_CURRENCY_F_Data' ) || class_exists( '\WOOMULTI_CURRENCY_Data' ) ) {
+		} elseif ( class_exists( '\WOOMULTI_CURRENCY_F_Data' ) || class_exists( '\WOOMULTI_CURRENCY_Data' ) ) {
 			$woo_multi_currency = class_exists( '\WOOMULTI_CURRENCY_F_Data' )
 				? new \WOOMULTI_CURRENCY_F_Data() : new \WOOMULTI_CURRENCY_Data();
 			$list_currencies    = $woo_multi_currency->get_list_currencies();
@@ -109,7 +107,7 @@ class TemplateHook {
 
 					$currencies[ $key ] = array(
 						'currency'     => $key,
-						'symbol'       => html_entity_decode($symbol),
+						'symbol'       => html_entity_decode( $symbol ),
 						'position'     => get_option( 'woocommerce_currency_pos' ),
 						'thousand_sep' => wc_get_price_thousand_separator(),
 						'decimal_sep'  => wc_get_price_decimal_separator(),
@@ -143,17 +141,20 @@ class TemplateHook {
 			}
 		}
 
-		return array_merge( array(
-			'cart_url'          => function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : '',
-			'checkout_url'      => function_exists( 'wc_get_checkout_url' ) ? wc_get_checkout_url() : '',
-			'store'             => Utils::vendorActive(),
-			'language'          => $language ?: 'en',
-			'languages'         => $languages,
-			'currencies'        => $currencies,
-			'currency'          => $currency,
-			'placeholder'       => APP_BUILDER_ASSETS . DIRECTORY_SEPARATOR . 'images/placeholder-416x416.png',
-			'placeholder_black' => APP_BUILDER_ASSETS . DIRECTORY_SEPARATOR . 'images/placeholder-black-416x416.png',
-		), $data );
+		return array_merge(
+			array(
+				'cart_url'          => function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : '',
+				'checkout_url'      => function_exists( 'wc_get_checkout_url' ) ? wc_get_checkout_url() : '',
+				'store'             => Utils::vendor_active(),
+				'language'          => $language ?: 'en',
+				'languages'         => $languages,
+				'currencies'        => $currencies,
+				'currency'          => $currency,
+				'placeholder'       => APP_BUILDER_ASSETS . DIRECTORY_SEPARATOR . 'images/placeholder-416x416.png',
+				'placeholder_black' => APP_BUILDER_ASSETS . DIRECTORY_SEPARATOR . 'images/placeholder-black-416x416.png',
+			),
+			$data
+		);
 	}
 
 	/** Action fires once a template has been saved.

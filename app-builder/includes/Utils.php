@@ -93,7 +93,7 @@ class Utils {
 	 * @return string
 	 * @since 1.0.11
 	 */
-	public static function vendorActive(): string {
+	public static function vendor_active(): string {
 		if ( class_exists( 'WeDevs_Dokan' ) || class_exists( 'Dokan_Pro' ) ) {
 			return 'dokan';
 		}

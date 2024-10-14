@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Hook
  *
@@ -10,7 +9,7 @@
 namespace AppBuilder;
 
 use AppBuilder\Hooks\AdsHook;
-use AppBuilder\Hooks\CaptchaHook;
+// use AppBuilder\Hooks\CaptchaHook;
 use AppBuilder\Hooks\CategoryHook;
 use AppBuilder\Hooks\DigitsHook;
 use AppBuilder\Hooks\ShortcodeHook;
@@ -46,6 +45,6 @@ class Hook {
 		new AdsHook();
 		new LmsHooks();
 		new VendorHook();
-		new CaptchaHook();
+		// new CaptchaHook();
 	}
 }

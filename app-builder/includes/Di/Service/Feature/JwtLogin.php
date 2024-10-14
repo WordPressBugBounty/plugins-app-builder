@@ -31,7 +31,7 @@ class JwtLogin extends FeatureAbstract {
 	public function __construct() {
 		$this->meta_key         = self::META_KEY;
 		$this->default_settings = array(
-			'status'     => 1,
+			'status'     => true,
 			'secret_key' => defined( 'AUTH_KEY' ) ? AUTH_KEY : home_url( '/app' ),
 			'exp'        => 30,
 		);

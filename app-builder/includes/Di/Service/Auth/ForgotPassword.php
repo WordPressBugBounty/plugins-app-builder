@@ -1,4 +1,12 @@
 <?php
+/**
+ * ForgotPassword
+ *
+ * @link       https://appcheap.io
+ * @since      5.0.0
+ * @author     ngocdt
+ * @package    AppBuilder
+ */
 
 namespace AppBuilder\Di\Service\Auth;
 
@@ -106,85 +114,85 @@ class ForgotPassword {
 		);
 	}
 
-    /**
-     * Get settings.
-     *
-     * @return array settings.
-     */
-    private function settings() {
-        $default_settings = array(
-            'status'     => 0,
-            'otp_expiration_time' => 1,
-            'otp_attempt_limit' => 3,
-            'otp_verification_block_duration' => 15,
-        );
-        $settings = app_builder()->get( 'settings' )->feature( 'forgot_password' );
-        return wp_parse_args( $settings, $default_settings );
-    }
+	/**
+	 * Get settings.
+	 *
+	 * @return array settings.
+	 */
+	private function settings() {
+		$default_settings = array(
+			'status'                          => 0,
+			'otp_expiration_time'             => 1,
+			'otp_attempt_limit'               => 3,
+			'otp_verification_block_duration' => 15,
+		);
+		$settings         = app_builder()->get( 'settings' )->feature( 'forgot_password' );
+		return wp_parse_args( $settings, $default_settings );
+	}
 
-    /**
-     * Check if the feature is disabled.
-     *
-     * @return bool
-     */
-    private function is_feature_disabled() {
-        $settings = $this->settings();
-        return ! $settings['status'];
-    }
+	/**
+	 * Check if the feature is disabled.
+	 *
+	 * @return bool
+	 */
+	private function is_feature_disabled() {
+		$settings = $this->settings();
+		return ! $settings['status'];
+	}
 
-    /**
-     * Get OTP expiration time.
-     *
-     * @return int
-     */
-    private function get_otp_expiration_time() {
-        $settings = $this->settings();
-        return (int)$settings['otp_expiration_time'] * MINUTE_IN_SECONDS;
-    }
+	/**
+	 * Get OTP expiration time.
+	 *
+	 * @return int
+	 */
+	private function get_otp_expiration_time() {
+		$settings = $this->settings();
+		return (int) $settings['otp_expiration_time'] * MINUTE_IN_SECONDS;
+	}
 
-    /**
-     * Get OTP attempt limit.
-     *
-     * @return int
-     */
-    private function get_otp_attempt_limit() {
-        $settings = $this->settings();
-        return (int)$settings['otp_attempt_limit'];
-    }
+	/**
+	 * Get OTP attempt limit.
+	 *
+	 * @return int
+	 */
+	private function get_otp_attempt_limit() {
+		$settings = $this->settings();
+		return (int) $settings['otp_attempt_limit'];
+	}
 
-    /**
-     * Get OTP verification block duration.
-     *
-     * @return int
-     */
-    private function get_otp_verification_block_duration() {
-        $settings = $this->settings();
-        return (int)$settings['otp_verification_block_duration'] * MINUTE_IN_SECONDS;
-    }
+	/**
+	 * Get OTP verification block duration.
+	 *
+	 * @return int
+	 */
+	private function get_otp_verification_block_duration() {
+		$settings = $this->settings();
+		return (int) $settings['otp_verification_block_duration'] * MINUTE_IN_SECONDS;
+	}
 
-    /**
-     * Verify OTP attempt limit.
-     *
-     * @param int $user_id user id.
-     *
-     * @return WP_Error|bool
-     */
-    private function verify_attempt_limit( $user_id ) {
-        $otp_attempt = get_transient( 'app_builder_forgot_password_attempt_' . $user_id );
-        $otp_attempt = $otp_attempt ? (int) $otp_attempt : 0;
+	/**
+	 * Verify OTP attempt limit.
+	 *
+	 * @param int $user_id user id.
+	 *
+	 * @return WP_Error|bool
+	 */
+	private function verify_attempt_limit( $user_id ) {
+		$otp_attempt = get_transient( 'app_builder_forgot_password_attempt_' . $user_id );
+		$otp_attempt = $otp_attempt ? (int) $otp_attempt : 0;
 
-        if ( $otp_attempt >= $this->get_otp_attempt_limit() ) {
-            return new WP_Error(
-                'otp_attempt_limit',
-                __( 'OTP attempt limit exceeded', 'mobile-builder' ),
-                array(
-                    'status' => 403,
-                )
-            );
-        }
+		if ( $otp_attempt >= $this->get_otp_attempt_limit() ) {
+			return new WP_Error(
+				'otp_attempt_limit',
+				__( 'OTP attempt limit exceeded', 'app-builder' ),
+				array(
+					'status' => 403,
+				)
+			);
+		}
 
-        return $otp_attempt;
-    }
+		return $otp_attempt;
+	}
 
 	/**
 	 * Forgot password.
@@ -195,15 +203,15 @@ class ForgotPassword {
 	 */
 	public function forgot_password( WP_REST_Request $request ) {
 
-        if ( $this->is_feature_disabled() ) {
-            return new WP_Error(
-                'feature_disabled',
-                __( 'Forgot password is disabled', 'mobile-builder' ),
-                array(
-                    'status' => 403,
-                )
-            );
-        }
+		if ( $this->is_feature_disabled() ) {
+			return new WP_Error(
+				'feature_disabled',
+				__( 'Forgot password is disabled', 'app-builder' ),
+				array(
+					'status' => 403,
+				)
+			);
+		}
 
 		$user_login = $request->get_param( 'user_login' );
 
@@ -213,11 +221,11 @@ class ForgotPassword {
 			return $user_data;
 		}
 
-        // Verify OTP attempt limit.
-        $verify_attempt_limit = $this->verify_attempt_limit( $user_data->ID );
-        if ( is_wp_error( $verify_attempt_limit ) ) {
-            return $verify_attempt_limit;
-        }
+		// Verify OTP attempt limit.
+		$verify_attempt_limit = $this->verify_attempt_limit( $user_data->ID );
+		if ( is_wp_error( $verify_attempt_limit ) ) {
+			return $verify_attempt_limit;
+		}
 
 		// Redefining user_login ensures we return the right case in the email.
 		$user_login = $user_data->user_login;
@@ -248,28 +256,28 @@ class ForgotPassword {
 		$key = wp_rand( 100000, 999999 );
 
 		// Hi [User Name].
-		$message = __( 'Hi', 'mobile-builder' ) . ' ' . $user_login . ',' . "\r\n\r\n";
+		$message = __( 'Hi', 'app-builder' ) . ' ' . $user_login . ',' . "\r\n\r\n";
 
 		// We heard you're having trouble remembering your password for [App Name]. No worries, it happens to the best of us!
-		$message .= __( 'We heard you\'re having trouble remembering your password for', 'mobile-builder' ) . ' ' . $site_name . '. ' . __( 'No worries, it happens to the best of us!', 'mobile-builder' ) . "\r\n\r\n";
+		$message .= __( 'We heard you\'re having trouble remembering your password for', 'app-builder' ) . ' ' . $site_name . '. ' . __( 'No worries, it happens to the best of us!', 'app-builder' ) . "\r\n\r\n";
 
 		// Your OTP is: [6-digit OTP].
-		$message .= __( 'Your OTP is:', 'mobile-builder' ) . ' ' . $key . "\r\n\r\n";
+		$message .= __( 'Your OTP is:', 'app-builder' ) . ' ' . $key . "\r\n\r\n";
 
 		// Please note: This OTP is confidential and should not be shared with anyone.
-		$message .= __( 'Please note: This OTP is confidential and should not be shared with anyone.', 'mobile-builder' ) . "\r\n\r\n";
+		$message .= __( 'Please note: This OTP is confidential and should not be shared with anyone.', 'app-builder' ) . "\r\n\r\n";
 
 		// If you didn't request a password reset, please disregard this email. However, we recommend updating your password regularly to keep your account secure.
-		$message .= __( 'If you didn\'t request a password reset, please disregard this email. However, we recommend updating your password regularly to keep your account secure.', 'mobile-builder' ) . "\r\n\r\n";
+		$message .= __( 'If you didn\'t request a password reset, please disregard this email. However, we recommend updating your password regularly to keep your account secure.', 'app-builder' ) . "\r\n\r\n";
 
 		// Subject: Access Your [App Name] Account again - One-Time Password Inside.
-		$title = __( 'Access Your', 'mobile-builder' ) . ' ' . $site_name . ' ' . __( 'Account again - One-Time Password Inside', 'mobile-builder' );
+		$title = __( 'Access Your', 'app-builder' ) . ' ' . $site_name . ' ' . __( 'Account again - One-Time Password Inside', 'app-builder' );
 
 		// Send email.
 		if ( $message && ! wp_mail( $user_email, wp_specialchars_decode( $title ), $message ) ) {
 			return new WP_Error(
 				'send_email',
-				__( 'Possible reason: your host may have disabled the mail() function.', 'mobile-builder' ),
+				__( 'Possible reason: your host may have disabled the mail() function.', 'app-builder' ),
 				array(
 					'status' => 403,
 				)
@@ -278,10 +286,10 @@ class ForgotPassword {
 
 		// Update OTP to user meta expire after [otp_expiration_time] minutes setting.
 		set_transient( 'app_builder_forgot_password_' . $user_data->ID, $key, $this->get_otp_expiration_time() );
-        set_transient( 'app_builder_forgot_password_attempt_' . $user_data->ID, $verify_attempt_limit, $this->get_otp_verification_block_duration() );
+		set_transient( 'app_builder_forgot_password_attempt_' . $user_data->ID, $verify_attempt_limit, $this->get_otp_verification_block_duration() );
 
 		// Response.
-		return rest_ensure_response( array( 'message' => __( 'OTP sent to your email.', 'mobile-builder' ) ) );
+		return rest_ensure_response( array( 'message' => __( 'OTP sent to your email.', 'app-builder' ) ) );
 	}
 
 	/**
@@ -295,18 +303,22 @@ class ForgotPassword {
 		$user_login = $request->get_param( 'user_login' );
 		$otp        = $request->get_param( 'otp' );
 
-		$user_data = $this->verify( $user_login );
+		$validate = apply_filters( 'app_builder_validate_form_data', true, $request, 'ForgotPassword' );
+		if ( is_wp_error( $validate ) ) {
+			return $validate;
+		}
 
+		$user_data = $this->verify( $user_login );
 		if ( is_wp_error( $user_data ) ) {
 			return $user_data;
 		}
 
-        // Verify OTP attempt limit.
-        $verify_attempt_limit = $this->verify_attempt_limit( $user_data->ID );
-        if ( is_wp_error( $verify_attempt_limit ) ) {
-            return $verify_attempt_limit;
-        }
-        set_transient( 'app_builder_forgot_password_attempt_' . $user_data->ID, $verify_attempt_limit + 1, $this->get_otp_verification_block_duration() );
+		// Verify OTP attempt limit.
+		$verify_attempt_limit = $this->verify_attempt_limit( $user_data->ID );
+		if ( is_wp_error( $verify_attempt_limit ) ) {
+			return $verify_attempt_limit;
+		}
+		set_transient( 'app_builder_forgot_password_attempt_' . $user_data->ID, $verify_attempt_limit + 1, $this->get_otp_verification_block_duration() );
 
 		// Redefining user_login ensures we return the right case in the email.
 		$user_login = $user_data->user_login;
@@ -318,7 +330,7 @@ class ForgotPassword {
 		if ( $otp !== $otp_user ) {
 			return new WP_Error(
 				'invalid_otp',
-				__( 'Invalid OTP', 'mobile-builder' ),
+				__( 'Invalid OTP', 'app-builder' ),
 				array(
 					'status' => 403,
 				)
@@ -370,7 +382,7 @@ class ForgotPassword {
 		if ( $otp !== $otp_user ) {
 			return new WP_Error(
 				'invalid_otp',
-				__( 'Expired or Password changed', 'mobile-builder' ),
+				__( 'Expired or Password changed', 'app-builder' ),
 				array(
 					'status' => 403,
 				)
@@ -386,7 +398,7 @@ class ForgotPassword {
 		// Response.
 		return rest_ensure_response(
 			array(
-				'message' => __( 'Password updated', 'mobile-builder' ),
+				'message' => __( 'Password updated', 'app-builder' ),
 			)
 		);
 	}
@@ -403,7 +415,7 @@ class ForgotPassword {
 		if ( empty( $user_login ) || ! is_string( $user_login ) ) {
 			$errors->add(
 				'empty_username',
-				__( 'Enter a username or email address.', 'mobile-builder' ),
+				__( 'Enter a username or email address.', 'app-builder' ),
 				array(
 					'status' => 404,
 				)
@@ -413,7 +425,7 @@ class ForgotPassword {
 			if ( empty( $user_data ) ) {
 				$errors->add(
 					'invalid_email',
-					__( 'There is no account with that username or email address.', 'mobile-builder' ),
+					__( 'There is no account with that username or email address.', 'app-builder' ),
 					array(
 						'status' => 404,
 					)
@@ -431,7 +443,7 @@ class ForgotPassword {
 		if ( ! $user_data ) {
 			$errors->add(
 				'invalidcombo',
-				__( 'There is no account with that username or email address.', 'mobile-builder' ),
+				__( 'There is no account with that username or email address.', 'app-builder' ),
 				array(
 					'status' => 404,
 				)

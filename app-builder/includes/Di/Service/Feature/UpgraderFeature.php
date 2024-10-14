@@ -44,7 +44,7 @@ class UpgraderFeature extends FeatureAbstract {
 	public function __construct() {
 		$this->meta_key         = self::META_KEY;
 		$this->default_settings = array(
-			'status'                  => 0,
+			'status'                  => false,
 			'application_id'          => '',
 			'bundle_id'               => '',
 			'enable_auto_update'      => false,

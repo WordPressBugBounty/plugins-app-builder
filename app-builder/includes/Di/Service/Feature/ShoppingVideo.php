@@ -41,7 +41,7 @@ class ShoppingVideo extends FeatureAbstract {
 	public function __construct() {
 		$this->meta_key         = self::META_KEY;
 		$this->default_settings = array(
-			'enable' => 0,
+			'status' => true,
 		);
 	}
 
@@ -56,7 +56,7 @@ class ShoppingVideo extends FeatureAbstract {
 		add_action( 'woocommerce_product_data_panels', array( $this, 'app_builder_shopping_video_custom_product_data_fields' ) );
 		add_action( 'woocommerce_process_product_meta', array( $this, 'app_builder_shopping_video_woocommerce_process_product_meta_fields_save' ) );
 		add_filter( 'app_builder_prepare_product_object', array( $this, 'app_builder_shopping_video_addons_prepare_product_object' ), 999, 3 );
-        add_filter( 'rest_product_collection_params', array($this, 'add_rand_orderby_rest_product_collection_params') );
+		add_filter( 'rest_product_collection_params', array( $this, 'add_rand_orderby_rest_product_collection_params' ) );
 	}
 
 	/**
@@ -88,18 +88,18 @@ class ShoppingVideo extends FeatureAbstract {
 		);
 	}
 
-    /**
-     * Support filter product by rand
-     *
-     * @param $query_params
-     *
-     * @return array
-     */
-    public function add_rand_orderby_rest_product_collection_params( $query_params ) {
-        $query_params['orderby']['enum'][] = 'rand';
+	/**
+	 * Support filter product by rand
+	 *
+	 * @param $query_params
+	 *
+	 * @return array
+	 */
+	public function add_rand_orderby_rest_product_collection_params( $query_params ) {
+		$query_params['orderby']['enum'][] = 'rand';
 
-        return $query_params;
-    }
+		return $query_params;
+	}
 
 	/**
 	 *

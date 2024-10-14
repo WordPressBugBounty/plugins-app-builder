@@ -31,7 +31,7 @@ class SampleFeature extends FeatureAbstract {
 	public function __construct() {
 		$this->meta_key         = self::META_KEY;
 		$this->default_settings = array(
-			'enable' => 0,
+			'status' => true,
 		);
 	}
 

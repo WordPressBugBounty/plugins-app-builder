@@ -45,7 +45,7 @@ class CaptchaHook {
 		$captcha = $request->get_param( 'captcha' );
 
 		if ( empty( $captcha ) || empty( $phrase ) ) {
-			return new \WP_Error(
+			return new WP_Error(
 				'app_builder_captcha',
 				__( 'Captcha or phrase not provider.', 'app-builder' ),
 				array(
@@ -57,7 +57,7 @@ class CaptchaHook {
 		$captcha_store = get_option( 'app_builder_captcha', array() );
 
 		if ( ! isset( $captcha_store[ $phrase ] ) ) {
-			return new \WP_Error(
+			return new WP_Error(
 				'app_builder_captcha',
 				__( 'Phrase not validate.', 'app-builder' ),
 				array(
@@ -72,7 +72,7 @@ class CaptchaHook {
 		update_option( 'app_builder_captcha', $captcha_store );
 
 		if ( strtolower( $captcha_data['phrase'] ) !== strtolower( $captcha ) ) {
-			return new \WP_Error(
+			return new WP_Error(
 				'app_builder_captcha',
 				__( 'Captcha not validate.', 'app-builder' ),
 				array(
@@ -82,7 +82,7 @@ class CaptchaHook {
 		}
 
 		if ( $captcha_data['time'] < time() ) {
-			return new \WP_Error(
+			return new WP_Error(
 				'app_builder_captcha',
 				__( 'Captcha expired.', 'app-builder' ),
 				array(

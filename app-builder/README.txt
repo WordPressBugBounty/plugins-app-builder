@@ -4,7 +4,7 @@ Donate link: https://1.envato.market/x9JBRR
 Tags: app builder, woocommerce app, news app, flutter, mobile builder
 Requires at least: 5.6
 Tested up to: 6.6
-Stable tag: 5.4.0
+Stable tag: 5.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.4
@@ -56,6 +56,7 @@ App builder works the same popular Page Builder in WordPress but it has a specia
 - Intercom Chat
 - Upgrader
 - Custom icons
+- Captcha
 
 === Integrations ===
 
@@ -151,6 +152,12 @@ Yeah! The app support multi languages
 12. Multiple page
 
 == Changelog ==
+
+= 5.4.1 - 13-Oct-2024 =
+Migrated: Captcha functionality moved to the "Features" tab; implemented Captcha verification for the Forgot Password OTP process.
+Added: WCFM review list, review submission, and API for fetching the review form.
+Added: Public features setting to App builder setting API
+Supported: Cirilla app version 4.1.3 compatibility.
 
 = 5.4.0 - 04-Oct-2024 =
 Support: OIDC Token Validation login Facebook in Limited Token

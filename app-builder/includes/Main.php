@@ -241,10 +241,16 @@ final class Main {
 	 */
 	public function rest_api_init() {
 		// Init Vendor API.
-		$vendor_name = Utils::vendorActive();
+		$vendor_name = Utils::vendor_active();
 		$vendor      = app_builder()->get( 'vendor' )->create( $vendor_name );
 		if ( $vendor ) {
 			$vendor->register_routes();
+		}
+
+		// Init Store API.
+		$store = app_builder()->get( 'store' )->create( $vendor_name );
+		if ( $store ) {
+			$store->register_routes();
 		}
 
 		// Init Auth API.

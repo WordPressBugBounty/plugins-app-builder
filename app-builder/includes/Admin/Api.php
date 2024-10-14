@@ -256,7 +256,8 @@ class Api extends Base {
 			 * Prepare template data
 			 */
 			$template_data = array(
-				'data' => is_null( $template ) ? array() : json_decode( $template->post_content ),
+				'data'     => is_null( $template ) ? array() : json_decode( $template->post_content ),
+				'features' => apply_filters( 'app_builder_features_public_data', array() ),
 			);
 
 			/**

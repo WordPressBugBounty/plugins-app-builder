@@ -31,10 +31,10 @@ class ForgotPassword extends FeatureAbstract {
 	public function __construct() {
 		$this->meta_key         = self::META_KEY;
 		$this->default_settings = array(
-			'status'     => 0,
-			'otp_expiration_time' => 1,
-            'otp_attempt_limit' => 3,
-            'otp_verification_block_duration' => 15,
+			'status'                          => false,
+			'otp_expiration_time'             => 1,
+			'otp_attempt_limit'               => 3,
+			'otp_verification_block_duration' => 15,
 		);
 	}
 
@@ -76,26 +76,26 @@ class ForgotPassword extends FeatureAbstract {
 				'page'   => 'index',
 				'fields' => array(
 					array(
-                        'name'  => 'otp_expiration_time',
-                        'label' => 'OTP Expiration Time(minutes)',
-                        'hint'  => 'Specify the time duration (in minutes) after which the OTP will expire and become invalid.',
-                        'type'  => 'number',
-                        'value' => isset( $data['otp_expiration_time'] ) ? $data['otp_expiration_time'] : 1,
-                    ),
-                    array(
-                        'name'  => 'otp_attempt_limit',
-                        'label' => 'OTP Attempt Limit',
-                        'hint'  => 'Specify the number of attempts allowed to verify the OTP.',
-                        'type'  => 'number',
-                        'value' => isset( $data['otp_attempt_limit'] ) ? $data['otp_attempt_limit'] : 3,
-                    ),
-                    array(
-                        'name'  => 'otp_verification_block_duration',
-                        'label' => 'OTP Verification Block Duration (minutes)',
-                        'hint'  => 'Specify the time duration (in minutes) for which the user will be blocked from verifying the OTP after reaching the maximum number of attempts.',
-                        'type'  => 'number',
-                        'value' => isset( $data['otp_verification_block_duration'] ) ? $data['otp_verification_block_duration'] : 15,
-                    ),
+						'name'  => 'otp_expiration_time',
+						'label' => 'OTP Expiration Time(minutes)',
+						'hint'  => 'Specify the time duration (in minutes) after which the OTP will expire and become invalid.',
+						'type'  => 'number',
+						'value' => isset( $data['otp_expiration_time'] ) ? $data['otp_expiration_time'] : 1,
+					),
+					array(
+						'name'  => 'otp_attempt_limit',
+						'label' => 'OTP Attempt Limit',
+						'hint'  => 'Specify the number of attempts allowed to verify the OTP.',
+						'type'  => 'number',
+						'value' => isset( $data['otp_attempt_limit'] ) ? $data['otp_attempt_limit'] : 3,
+					),
+					array(
+						'name'  => 'otp_verification_block_duration',
+						'label' => 'OTP Verification Block Duration (minutes)',
+						'hint'  => 'Specify the time duration (in minutes) for which the user will be blocked from verifying the OTP after reaching the maximum number of attempts.',
+						'type'  => 'number',
+						'value' => isset( $data['otp_verification_block_duration'] ) ? $data['otp_verification_block_duration'] : 15,
+					),
 				),
 			),
 		);

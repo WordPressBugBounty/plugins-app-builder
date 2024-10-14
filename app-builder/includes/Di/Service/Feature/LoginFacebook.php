@@ -31,6 +31,7 @@ class LoginFacebook extends FeatureAbstract {
 	public function __construct() {
 		$this->meta_key         = self::META_KEY;
 		$this->default_settings = array(
+			'status'     => true,
 			'app_id'     => '',
 			'app_secret' => '',
 		);
@@ -88,5 +89,22 @@ class LoginFacebook extends FeatureAbstract {
 				),
 			),
 		);
+	}
+
+	/**
+	 * Get public data
+	 *
+	 * @param array $features features.
+	 *
+	 * @return array
+	 */
+	public function get_public_data( $features ) {
+		$key = $this->get_public_meta_key();
+
+		$data = $this->get_data();
+		unset( $data['app_secret'] );
+
+		$features[ $key ] = $data;
+		return $features;
 	}
 }

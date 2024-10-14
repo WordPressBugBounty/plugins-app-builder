@@ -1,4 +1,12 @@
 <?php
+/**
+ * FeatureFactory
+ *
+ * @link       https://appcheap.io
+ * @since      5.0.0
+ * @author     ngocdt
+ * @package    AppBuilder
+ */
 
 namespace AppBuilder\Di\Service\Feature;
 
@@ -43,8 +51,9 @@ class FeatureFactory {
 			LoginFirebasePhoneNumber::META_KEY => LoginFirebasePhoneNumber::class,
 			CustomIconFeature::META_KEY        => CustomIconFeature::class,
 			UpgraderFeature::META_KEY          => UpgraderFeature::class,
-            ShoppingVideo::META_KEY            => ShoppingVideo::class,
-            ForgotPassword::META_KEY           => ForgotPassword::class,
+			ShoppingVideo::META_KEY            => ShoppingVideo::class,
+			ForgotPassword::META_KEY           => ForgotPassword::class,
+			Captcha::META_KEY                  => Captcha::class,
 		);
 	}
 
@@ -59,6 +68,7 @@ class FeatureFactory {
 			$instance = $this->get_feature( $feature );
 
 			add_filter( 'app_builder_features', array( $instance, 'register_form_fields' ), 1, 1 );
+			add_filter( 'app_builder_features_public_data', array( $instance, 'get_public_data' ), 10, 1 );
 
 			if ( $instance->is_active() ) {
 				$instance->activation_hooks();
