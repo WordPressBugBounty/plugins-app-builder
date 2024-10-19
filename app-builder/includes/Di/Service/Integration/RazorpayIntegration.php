@@ -14,7 +14,7 @@ namespace AppBuilder\Di\Service\Integration;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * SmartCouponIntegrations Class.
+ * RazorpayIntegration Class.
  */
 class RazorpayIntegration implements IntegrationInterface {
 	use IntegrationTraits;
@@ -85,7 +85,7 @@ class RazorpayIntegration implements IntegrationInterface {
 				$_POST['razorpay_signature']      = $context->payment_data['razorpay_signature'];
 				$_POST['razorpay_wc_form_submit'] = $context->payment_data['razorpay_wc_form_submit'];
 				// Call the check_razorpay_response method to check the response.
-                $gateway->check_razorpay_response();
+				$gateway->check_razorpay_response();
 			} else {
 				$razo_order_id = $gateway->createOrGetRazorpayOrderId( $order, $order_id );
 

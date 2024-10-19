@@ -1,4 +1,12 @@
 <?php
+/**
+ * The main plugin class.
+ *
+ * @link       https://appcheap.io
+ * @since      5.0.0
+ *
+ * @package    AppBuilder
+ */
 
 namespace AppBuilder;
 
