@@ -10,7 +10,7 @@
  * Plugin Name:       App Builder - Create Native Android & iOS Apps On The Flight
  * Plugin URI:        https://appcheap.io/docs
  * Description:       The App Builder has it all: drag and drop mobile app, power and control over your app. Get started now!.
- * Version:           5.4.4
+ * Version:           5.4.6
  * Author:            Appcheap.io
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -124,7 +124,7 @@ $app_builder_container->set(
 /**
  * Bind Cache.
  */
-$container->set(
+$app_builder_container->set(
 	'cache',
 	function ( $c ) {
 		return new AppBuilder\Di\Service\Api\Cache( $c->get( 'settings' )->feature( 'cache_control' ) );
