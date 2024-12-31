@@ -26,7 +26,7 @@ final class Main {
 	 * @var string
 	 * @since 1.0.0
 	 */
-	public $version = '5.4.0';
+	public $version = '5.4.8';
 
 	/**
 	 * AppBuilder JS version.
@@ -34,7 +34,7 @@ final class Main {
 	 * @var string
 	 * @since 1.0.0
 	 */
-	public $js_version = '5.4.0';
+	public $js_version = '5.4.8';
 
 	/**
 	 * Support Cirilla stable version.

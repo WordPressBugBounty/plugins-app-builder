@@ -4,7 +4,7 @@ Donate link: https://1.envato.market/x9JBRR
 Tags: app builder, woocommerce app, news app, flutter, mobile builder
 Requires at least: 5.6
 Tested up to: 6.6.2
-Stable tag: 5.4.7
+Stable tag: 5.4.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.4
