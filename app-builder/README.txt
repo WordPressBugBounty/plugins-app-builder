@@ -4,7 +4,7 @@ Donate link: https://1.envato.market/x9JBRR
 Tags: app builder, woocommerce app, news app, flutter, mobile builder
 Requires at least: 5.6
 Tested up to: 6.6.2
-Stable tag: 5.4.8
+Stable tag: 5.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires PHP: 7.4
@@ -152,6 +152,10 @@ Yeah! The app support multi languages
 12. Multiple page
 
 == Changelog ==
+
+= 5.5.1 - 8-Mar-2025 =
+Fixed: Icon in app builder don't appear
+Fixed: "Order price not validate" in HyperpayGateway
 
 = 5.4.7 - 28-Nov-2024 =
 Improved: Setting Checkout Modes of General in Customize a template 

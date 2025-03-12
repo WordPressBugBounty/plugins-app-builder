@@ -149,8 +149,8 @@ class HyperpayGateway {
 			}
 
 			/** Check order price */
-			$amount       = $result['amount'];
-			$order_amount = $order->get_total();
+			$amount       = wc_format_decimal( $result['amount'], 2 );
+			$order_amount = wc_format_decimal( $order->get_total(), 2 );
 			if ( "$amount" !== "$order_amount" ) {
 				return new WP_Error(
 					'app_builder_confirm_payment',
